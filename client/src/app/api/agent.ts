@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { IBasket } from "../models/basket";
-import { Product } from "../models/product";
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -53,8 +52,8 @@ const requests = {
 };
 
 const Catalog = {
-  list: () => requests.get<Product[]>("products"),
-  details: (id: number) => requests.get<Product>(`products/${id}`),
+  list: () => requests.get<any>("products"),
+  details: (id: number) => requests.get<any>(`products/${id}`),
 };
 
 const TestErrors = {
@@ -68,7 +67,7 @@ const TestErrors = {
 const Basket = {
   get: () => requests.get<IBasket>("basket"),
   addItem: (productId: number, quantity = 1) =>
-    requests.post<IBasket>(
+    requests.post<any>(
       `basket?productId=${productId}&quantity=${quantity}`,
       {}
     ),
