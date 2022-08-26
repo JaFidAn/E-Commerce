@@ -1,3 +1,4 @@
+import { PaginatedResponse } from "./../models/pagination";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { IBasket } from "../models/basket";
@@ -12,6 +13,14 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 axios.interceptors.response.use(
   async (response) => {
     await sleep();
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+      response.data = new PaginatedResponse(
+        response.data,
+        JSON.parse(pagination)
+      );
+      return response;
+    }
     return response;
   },
   (error: AxiosError) => {
@@ -44,7 +53,8 @@ axios.interceptors.response.use(
 );
 
 const requests = {
-  get: <T>(url: string) => axios.get<T>(url).then(responseBody),
+  get: <T>(url: string, params?: URLSearchParams) =>
+    axios.get<T>(url, { params }).then(responseBody),
   post: <T>(url: string, body: {}) =>
     axios.post<T>(url, body).then(responseBody),
   put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
@@ -52,8 +62,9 @@ const requests = {
 };
 
 const Catalog = {
-  list: () => requests.get<any>("products"),
+  list: (params: URLSearchParams) => requests.get<any>("products", params),
   details: (id: number) => requests.get<any>(`products/${id}`),
+  fetchFilters: () => requests.get<any>("/products/filters"),
 };
 
 const TestErrors = {
