@@ -21,6 +21,7 @@ import Login from "../../features/account/Login";
 import Register from "../../features/account/Register";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
+import Order from "../../features/orders/Order";
 function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
@@ -71,6 +72,7 @@ function App() {
           <Route path="/basket" element={<BasketPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/orders" element={<Order />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

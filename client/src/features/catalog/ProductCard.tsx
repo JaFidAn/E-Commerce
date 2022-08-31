@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import { Product } from "../../app/models/product";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { currencyFormat } from "../../app/util/util";
 import { addBasketItemAsync } from "../basket/basketSlice";
 
 interface Props {
@@ -46,7 +47,7 @@ export default function ProductCard({ product }: Props) {
       />
       <CardContent>
         <Typography gutterBottom color="secondary" variant="h5">
-          ${(product.price / 100).toFixed(2)}
+          {currencyFormat(product.price)}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {product.brand} / {product.type}
@@ -54,7 +55,7 @@ export default function ProductCard({ product }: Props) {
       </CardContent>
       <CardActions>
         <LoadingButton
-          loading={status.includes("pendingAddItem" + product.id)}
+          loading={status.includes("pendingAddItem" + product.id + "add")}
           onClick={() =>
             dispatch(addBasketItemAsync({ productId: product.id }))
           }

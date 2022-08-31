@@ -15,11 +15,11 @@ const initialState: BasketState = {
 
 export const fetchBasketAsync = createAsyncThunk<IBasket>(
   "basket/fetchBasketAsync",
-  async (_, thunAPI) => {
+  async (_, thunkAPI) => {
     try {
       return await agent.Basket.get();
     } catch (error: any) {
-      return thunAPI.rejectWithValue({ error: error.data });
+      return thunkAPI.rejectWithValue({ error: error.data });
     }
   },
   {
@@ -67,9 +67,8 @@ export const basketSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addBasketItemAsync.pending, (state, action) => {
-      state.status = "pendingAddItem" + action.meta.arg.productId;
+      state.status = "pendingAddItem" + action.meta.arg.productId + "add";
     });
-
     builder.addCase(removeBasketItemAsync.pending, (state, action) => {
       state.status =
         "pendingRemoveItem" + action.meta.arg.productId + action.meta.arg.name;
@@ -85,7 +84,8 @@ export const basketSlice = createSlice({
         state.basket.items.splice(itemIndex, 1);
       state.status = "idle";
     });
-    builder.addCase(removeBasketItemAsync.rejected, (state) => {
+    builder.addCase(removeBasketItemAsync.rejected, (state, action) => {
+      console.log(action.payload);
       state.status = "idle";
     });
     builder.addMatcher(
@@ -97,7 +97,8 @@ export const basketSlice = createSlice({
     );
     builder.addMatcher(
       isAnyOf(addBasketItemAsync.rejected, fetchBasketAsync.rejected),
-      (state) => {
+      (state, action) => {
+        console.log(action.payload);
         state.status = "idle";
       }
     );
