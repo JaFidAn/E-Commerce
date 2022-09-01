@@ -46,20 +46,24 @@ namespace API.Controllers
             _context.Update(basket);
 
             var result = await _context.SaveChangesAsync() > 0;
+
             if (!result) return BadRequest(new ProblemDetails { Title = "Problem updating basket with intent" });
 
             return basket.MapBasketToDto();
         }
 
         [HttpPost("webhook")]
-        public async Task<ActionResult> StripeWebHook()
+        public async Task<ActionResult> StripeWebhook()
         {
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
-            var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _config["StripeSettings:WhSecret"]);
+
+            var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"],
+                _config["StripeSettings:WhSecret"]);
 
             var charge = (Charge)stripeEvent.Data.Object;
 
-            var order = await _context.Orders.FirstOrDefaultAsync(x => x.PaymentIntentId == charge.PaymentIntentId);
+            var order = await _context.Orders.FirstOrDefaultAsync(x =>
+                x.PaymentIntentId == charge.PaymentIntentId);
 
             if (charge.Status == "succeeded") order.OrderStatus = OrderStatus.PaymentReceived;
 
