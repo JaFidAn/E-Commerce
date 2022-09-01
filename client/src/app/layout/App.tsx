@@ -61,6 +61,7 @@ function App() {
       <ToastContainer position="bottom-right" hideProgressBar />
       <CssBaseline />
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
+
       <Container>
         <Routes>
           <Route path="/" element={<HomePage />} />
