@@ -27,6 +27,12 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ClientSecret")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Baskets");
@@ -74,6 +80,9 @@ namespace API.Data.Migrations
 
                     b.Property<int>("OrderStatus")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("Subtotal")
                         .HasColumnType("INTEGER");
@@ -172,14 +181,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "c7b3024a-a41a-4000-981c-c74f504b8e41",
+                            ConcurrencyStamp = "ccf49710-dcf1-45ca-95b7-2f100cf01182",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "08963062-be4c-4d4a-ba7a-b3f7d6e7bb74",
+                            ConcurrencyStamp = "6c8fd9a4-3783-4380-a08b-335cebd59931",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

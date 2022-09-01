@@ -12,4 +12,6 @@ export interface IBasket {
   id: number;
   buyerId: string;
   items: IBasketItem[];
+  paymentIntentId?: string;
+  clientSecret?: string;
 }

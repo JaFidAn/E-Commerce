@@ -14,7 +14,6 @@ import { Route, Routes } from "react-router-dom";
 import ServerError from "../errors/ServerError";
 import BasketPage from "../../features/basket/BasketPage";
 import LoadingComponent from "./LoadingComponent";
-import CheckoutPage from "../../features/checkout/CheckoutPage";
 import { useAppDispatch } from "../store/configureStore";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import Login from "../../features/account/Login";
@@ -22,6 +21,7 @@ import Register from "../../features/account/Register";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 import Order from "../../features/orders/Order";
+import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
@@ -71,7 +71,7 @@ function App() {
           <Route path="/about/server-error" element={<ServerError />} />
           <Route path="/basket" element={<BasketPage />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/checkout" element={<CheckoutWrapper />} />
             <Route path="/orders" element={<Order />} />
           </Route>
           <Route path="/login" element={<Login />} />
