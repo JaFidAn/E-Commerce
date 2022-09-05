@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
-    public partial class PosgresInitial : Migration
+    public partial class FinalToPublishing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -100,10 +100,11 @@ namespace API.Data.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<long>(type: "bigint", nullable: false),
-                    PictureUrl = table.Column<string>(type: "text", nullable: false),
+                    PictureUrl = table.Column<string>(type: "text", nullable: true),
                     Type = table.Column<string>(type: "text", nullable: false),
                     Brand = table.Column<string>(type: "text", nullable: false),
-                    QuantityInStock = table.Column<int>(type: "integer", nullable: false)
+                    QuantityInStock = table.Column<int>(type: "integer", nullable: false),
+                    PublicId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -295,8 +296,8 @@ namespace API.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "8e0d9307-9fe1-4248-8c04-78d44b7d8da3", "Member", "MEMBER" },
-                    { 2, "29168a5b-0a79-4e34-9e86-c235cf167e9b", "Admin", "ADMIN" }
+                    { 1, "2d2ac31d-f8ad-4f7c-9272-824f8cba4d05", "Member", "MEMBER" },
+                    { 2, "7442a075-d0cb-4091-a49b-f97e49b493eb", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
