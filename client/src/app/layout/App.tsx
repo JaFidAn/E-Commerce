@@ -22,6 +22,7 @@ import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 import Order from "../../features/orders/Order";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
+import Inventory from "../../features/admin/Inventory";
 function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
@@ -74,6 +75,9 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/checkout" element={<CheckoutWrapper />} />
             <Route path="/orders" element={<Order />} />
+          </Route>
+          <Route element={<PrivateRoute roles={["Admin"]} />}>
+            <Route path="/inventory" element={<Inventory />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

@@ -111,6 +111,14 @@ export const catalogSlice = createSlice({
     resetProductParams: (state) => {
       state.productParams = initParams();
     },
+    setProduct: (state, action) => {
+      productsAdapter.upsertOne(state, action.payload);
+      state.productsLoadedState = false;
+    },
+    removeProduct: (state, action) => {
+      productsAdapter.removeOne(state, action.payload);
+      state.productsLoadedState = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProductsAsync.pending, (state) => {
@@ -158,4 +166,6 @@ export const {
   setMetaData,
   resetProductParams,
   setPageNumber,
+  setProduct,
+  removeProduct,
 } = catalogSlice.actions;
